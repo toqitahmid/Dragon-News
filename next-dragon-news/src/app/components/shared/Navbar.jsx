@@ -7,7 +7,7 @@ const Navbar = () => {
     return (
         <div className="lg:w-9/12 md:w-10/12 w-11/12 mx-auto mt-5 bg-gray-50 rounded-md p-1">
         <div className="flex justify-between items-center">
-            <div></div>
+            <div className="sm:flex hidden"></div>
             <div className=" flex gap-2">
                 <NavLink href='/'>Home</NavLink>
                 <NavLink href='/about'>About</NavLink>
