@@ -1,0 +1,74 @@
+import MobileViewSocialPage from "../socials.jsx/mobileView/page";
+import NavLink from "../../shared/NavLink";
+
+const CetagoriesPage = ({ cetagories }) => {
+  return (
+    <div className="col-span-4 sm:col-span-3 md:col-span-3 bg-gray-50 min-h-[auto] sm:min-h-[60vh] md:min-h-[60vh] w-full p-2 sm:p-3 md:p-4 rounded-lg">
+      {cetagories.map((category) => (
+        <div
+          key={category.category_id}
+          className="py-1 sm:py-2 md:py-2 text-xs sm:text-sm md:text-base"
+        >
+          <NavLink href={`/cetagories/${category.category_id}`}>
+            {category.category_name}
+          </NavLink>
+        </div>
+      ))}
+      <div className="md:hidden flex">
+        <MobileViewSocialPage></MobileViewSocialPage>
+      </div>
+    </div>
+  );
+};
+
+export default CetagoriesPage;
+
+
+
+
+
+
+
+
+//get all news cetagories
+const getNewsCetagories = async () => {
+  try {
+    const res = await fetch(
+      `https://openapi.programming-hero.com/api/news/categories`,
+      {
+        cache: "no-store",
+      },
+    );
+    const json = await res.json();
+    return json.data;
+  } catch (error) {
+    console.log("Fetch error: ", error);
+    return null;
+  }
+};
+
+//get news by category id
+const getNewsByCategoryId = async (categoryId) => {
+  try {
+    const res = await fetch(
+      `https://openapi.programming-hero.com/api/news/category/${categoryId}`,
+      { cache: "no-store" },
+    );
+    const json = await res.json();
+    return json.data;
+  } catch (error) {
+    console.log(`fetch error`, error);
+    return [];
+  }
+};
+
+const CategoryNewsPage = async ({ params }) => {
+  const { id } = await params;
+
+  const [newsByCategory, cetagoriesData] = await Promise.all([
+    getNewsByCategoryId(id),
+    getNewsCetagories(),
+  ]);
+
+  const cetagories = cetagoriesData || [];
+  console.log("News by category:", newsByCategory);

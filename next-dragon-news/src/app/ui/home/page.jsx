@@ -9,6 +9,7 @@ const newsCetagories = async () => {
     );
     const json = await res.json();
     return json.data;
+    console.log("Categories API Response:", json);
   } catch (error) {
     throw new Error("Server falid to fetching!");
   }
