@@ -1,17 +1,5 @@
 import Link from "next/link";
-
-// -----------------------------------------------
-// -----------------------------------------------
-const getNewsById = async (newsId) => {
-  const res = await fetch(
-    `https://openapi.programming-hero.com/api/news/${newsId}`,
-    { cache: "no-store" },
-  );
-  const json = await res.json();
-
-  return json.data[0];
-};
-
+import { getNewsById } from "@/lib/data";
 // -----------------------------------------------
 // -----------------------------------------------
 const formatDate = (dateStr) => {

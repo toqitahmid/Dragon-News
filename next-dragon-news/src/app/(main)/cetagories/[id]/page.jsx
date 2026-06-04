@@ -1,45 +1,15 @@
 import Link from "next/link";
+import { newsCetagories, newsCetagoriesById } from "@/lib/data";
 import CetagoriesPage from "@/app/components/news/cetagories/page";
 
-//get all news cetagories
-const getNewsCetagories = async () => {
-  try {
-    const res = await fetch(
-      `https://openapi.programming-hero.com/api/news/categories`,
-      {
-        cache: "no-store",
-      },
-    );
-    const json = await res.json();
-    return json.data;
-  } catch (error) {
-    console.log("Fetch error: ", error);
-    return null;
-  }
-};
-
-const getNewsByCategoryId = async (categoryId) => {
-  try {
-    const res = await fetch(
-      `https://openapi.programming-hero.com/api/news/category/${categoryId}`,
-      { cache: "no-store" },
-    );
-    const json = await res.json();
-    console.log("API Response:", json);
-    return json.data || [];
-  } catch (error) {
-    console.error("Fetch error:", error);
-    return [];
-  }
-};
 
 const CategoryNewsPage = async ({ params }) => {
   const { id } = await params;
   console.log("Category ID:", id);
 
   const [newsByCategory, cetagoriesData] = await Promise.all([
-    getNewsByCategoryId(id),
-    getNewsCetagories(),
+    newsCetagoriesById(id),
+    newsCetagories(),
   ]);
 
   const cetagories = cetagoriesData?.news_category || [];
