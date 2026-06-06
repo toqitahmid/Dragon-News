@@ -7,7 +7,18 @@ import {newsCetagories,newsCetagoriesById} from "@/lib/data"
 const HomePage = async () => {
   const receivedNewsCetgories = await newsCetagories();
   const cetagories = receivedNewsCetgories.news_category;
-  const newsCetagoryById = await newsCetagoriesById('01');
+
+  let id = null;
+
+  for(let cetagory of cetagories){
+
+    if(cetagory.category_name === "All News"){
+      id = cetagory.category_id;
+    }
+  }
+
+  
+  const newsCetagoryById = await newsCetagoriesById(id);
   return (
     <div className="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:w-9/12 md:w-full sm:w-full w-full mx-auto my-10 gap-2 px-2 sm:px-4 md:px-6">
       <CetagoriesPage cetagories={cetagories}></CetagoriesPage>
